@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#152b25">
+  <title>Redefinir senha | EncomendaFácil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body{min-height:100vh;display:grid;place-items:center;background:#f3f7f4;padding:24px}
+    .reset-card{width:min(100%,480px);padding:34px;background:#fff;border:1px solid #e3ebe5;border-radius:18px;box-shadow:0 18px 55px rgba(25,57,43,.10)}
+    .reset-card h1{font:800 26px Manrope,sans-serif;margin:14px 0 8px;color:#213d30}
+    .reset-card p{font-size:13px;line-height:1.6;color:#758278;margin:0 0 22px}
+    .reset-card label{display:block;margin:14px 0 7px;font-size:11px;font-weight:700;color:#44534b}
+    .reset-card input{width:100%;height:46px;border:1px solid #dfe8e1;border-radius:9px;padding:0 13px;font:13px 'DM Sans',sans-serif}
+    .reset-card .btn{width:100%;margin-top:20px;min-height:45px}
+    #resetMessage{min-height:20px;margin-top:12px;font-size:12px;color:#ad4646}
+    #resetMessage.success{color:#287852}
+    .reset-back{display:inline-block;margin-top:14px;color:#34714d;font-size:12px;font-weight:700;text-decoration:none}
+    .reset-brand{display:flex;align-items:center;gap:11px;color:#214333;font:800 16px Manrope,sans-serif}
+    .reset-brand small{display:block;color:#839087;font:500 10px 'DM Sans',sans-serif;margin-top:2px}
+  </style>
+</head>
+<body>
+  <main class="reset-card">
+    <div class="reset-brand"><div class="brand-mark"><span></span><span></span><span></span></div><div>EncomendaFácil<small>Gestão de solicitações</small></div></div>
+    <h1>Crie uma nova senha</h1>
+    <p>Escolha uma senha nova para voltar a acessar a área do Comprador.</p>
+    <form id="resetPasswordForm">
+      <label for="newPassword">Nova senha</label>
+      <input id="newPassword" type="password" minlength="8" autocomplete="new-password" required placeholder="Mínimo de 8 caracteres">
+      <label for="confirmPassword">Confirmar nova senha</label>
+      <input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" required placeholder="Digite novamente">
+      <button class="btn btn-primary" type="submit">Salvar nova senha</button>
+    </form>
+    <div id="resetMessage" role="status" aria-live="polite"></div>
+    <a class="reset-back" href="index.html">Voltar ao login</a>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="redefinir-senha.js"></script>
+</body>
+</html>

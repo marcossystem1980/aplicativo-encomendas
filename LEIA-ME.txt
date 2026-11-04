@@ -1,0 +1,70 @@
+ENCOMENDAFÁCIL — VERSÃO SUPABASE
+HTML, CSS e JavaScript puro + Supabase Auth + PostgreSQL
+
+ESTRUTURA
+- index.html: tela de login e aplicação.
+- styles.css: identidade visual.
+- app.js: regras das telas e integração com o banco.
+- supabase-config.js: URL e chave pública do seu projeto Supabase.
+- redefinir-senha.html / redefinir-senha.js: recuperação de senha do Comprador.
+- vincular-comprador.sql: associação do usuário Auth ao perfil Comprador.
+
+1. CONFIGURAR A CONEXÃO COM O SUPABASE
+1) A URL e a Publishable Key do projeto já estão preenchidas em supabase-config.js.
+2) A chave publishable pode ficar no navegador; NUNCA use service_role/secret key.
+3) Em Authentication > Sign In / Providers, habilite Anonymous Sign-Ins para o acesso das lojas.
+4) Em Authentication > URL Configuration, adicione como Redirect URL o endereço completo do arquivo redefinir-senha.html em localhost e, depois, no domínio publicado pelo Vercel.
+
+2. CONFIGURAR A SENHA GLOBAL DAS LOJAS
+A senha global continua sendo a senha atual definida pela empresa. Ela é validada no banco por meio da função entrar_como_loja.
+Se ainda não configurou o hash após criar as tabelas, execute no SQL Editor (somente uma vez):
+
+insert into public.configuracoes_seguranca (chave, valor_hash)
+values ('senha_global_lojas', extensions.crypt('123', extensions.gen_salt('bf')))
+on conflict (chave) do update
+set valor_hash = excluded.valor_hash, updated_at = now();
+
+Se a senha global já estiver configurada, não é necessário executar novamente. Para alterar a senha global no futuro, substitua 123 pela nova senha no SQL Editor.
+
+3. CRIAR O USUÁRIO COMPRADOR
+O Comprador coordenador.compras@ultraassessoria.com.br já foi criado e vinculado ao perfil comprador. Não é necessário criar outro usuário nem executar novamente o SQL de vínculo.
+Para conferir, utilize database/verificar_configuracao_inicial.sql. No site, entre usando o e-mail e a senha definidos no Supabase Auth.
+
+4. RECUPERAÇÃO E ALTERAÇÃO DE SENHA
+- Na tela inicial, selecione Comprador e informe o e-mail; clique em Esqueci minha senha.
+- O e-mail terá um link para redefinir-senha.html.
+- Dentro de Configurações > Minha conta, o Comprador também pode definir uma nova senha estando autenticado.
+- A senha mínima definida na tela é de 8 caracteres.
+- Configure o SMTP/e-mail de produção no Supabase quando for publicar para uso real. O envio padrão pode ter limites.
+
+5. DADOS E PERMISSÕES
+- Lojas: acesso por CNPJ + senha global. A senha é validada no servidor; o JavaScript não guarda a senha.
+- Comprador: e-mail + senha pelo Supabase Auth.
+- Encomendas e cadastro de lojas são armazenados no Supabase e compartilhados entre dispositivos.
+- As regras RLS limitam cada loja às próprias encomendas; Comprador autorizado consulta e administra todas.
+- A exclusão de encomendas foi convertida em arquivamento lógico para preservar o histórico.
+- localStorage permanece apenas para a preferência visual de recolher o menu e para detectar/marcar a migração local.
+
+6. MIGRAR DADOS DA VERSÃO ANTIGA
+Se os pedidos antigos estão no localStorage do navegador, abra esta nova versão no MESMO navegador e no MESMO endereço/porta usados pela versão antiga (por exemplo, http://127.0.0.1:5500).
+Depois de entrar como Comprador, abra Configurações e use Migrar dados antigos para o Supabase. Os dados antigos não serão apagados.
+Se for usar outro endereço/origem, o navegador não permite ler o localStorage antigo automaticamente; será necessário abrir a versão anterior no endereço original para realizar a migração.
+
+7. TESTE LOCAL
+1) Abra a pasta no VS Code.
+2) Use Live Server ou outro servidor local para abrir index.html (não use file://).
+3) Configure supabase-config.js, crie o usuário Comprador, vincule o perfil e importe sua lista de lojas.
+4) Teste o login Comprador, importação de lojas, recuperação/alteração de senha.
+5) Teste o acesso de loja com um CNPJ que esteja cadastrado e a senha global.
+6) Crie uma encomenda e confirme que ela aparece no painel do Comprador e que a loja vê somente os próprios pedidos.
+
+8. PUBLICAR
+- O projeto é estático; não precisa de npm, React ou Vite.
+- Envie o conteúdo desta pasta para um repositório GitHub.
+- No Vercel, importe o repositório e mantenha Framework Preset = Other.
+- Se a pasta aplicativo-encomendas for a raiz do repositório, deixe Root Directory como ./ (ou selecione a subpasta se enviar o diretório externo).
+- Após publicar, inclua o domínio Vercel/redefinir-senha.html em Authentication > URL Configuration no Supabase.
+- Cada atualização enviada ao GitHub poderá gerar um novo deploy no Vercel.
+
+OBSERVAÇÃO SOBRE SEGURANÇA
+Nunca compartilhe senha do banco, service_role ou secret key. Para o navegador, use somente a Project URL e a Publishable/anon key. As regras RLS do banco são a proteção real dos dados.

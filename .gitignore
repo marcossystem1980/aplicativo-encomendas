@@ -1,0 +1,10 @@
+# Editor / sistema
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Dependências se forem adicionadas no futuro
+node_modules/
+.env
+.env.*
+!.env.example

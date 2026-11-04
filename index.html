@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#152b25" />
+  <title>EncomendaFácil | Gestão de encomendas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="toastRegion" class="toast-region" aria-live="polite"></div>
+
+  <main id="loginView" class="login-layout">
+    <section class="login-aside">
+      <div class="brand brand-light">
+        <div class="brand-mark"><span></span><span></span><span></span></div>
+        <div><strong>EncomendaFácil</strong><small>Gestão de solicitações</small></div>
+      </div>
+      <div class="aside-copy">
+        <span class="eyebrow">COMPRAS MAIS ORGANIZADAS</span>
+        <h1>Da solicitação<br>à entrega, <em>tudo<br>em um só lugar.</em></h1>
+        <p>Centralize os pedidos das lojas, acompanhe cada produto e tenha uma visão clara do que foi comprado ou está em falta.</p>
+      </div>
+      <div class="aside-bottom"><span class="pulse-dot"></span> Plataforma de acompanhamento de encomendas</div>
+      <div class="decor decor-one"></div><div class="decor decor-two"></div>
+    </section>
+
+    <section class="login-main">
+      <div class="login-card">
+        <div class="mobile-brand brand">
+          <div class="brand-mark"><span></span><span></span><span></span></div>
+          <div><strong>EncomendaFácil</strong><small>Gestão de solicitações</small></div>
+        </div>
+        <div class="login-heading">
+          <span class="eyebrow">BEM-VINDO</span>
+          <h2>Acesse sua conta</h2>
+          <p>Escolha seu perfil para continuar.</p>
+        </div>
+        <div class="role-switch" role="tablist" aria-label="Tipo de acesso">
+          <button class="role-option active" type="button" data-role="loja" role="tab" aria-selected="true">
+            <span class="role-icon">▣</span><span><strong>Loja</strong><small>Solicitar produtos</small></span>
+          </button>
+          <button class="role-option" type="button" data-role="comprador" role="tab" aria-selected="false">
+            <span class="role-icon">◫</span><span><strong>Comprador</strong><small>Gerenciar pedidos</small></span>
+          </button>
+        </div>
+        <form id="loginForm" class="login-form">
+          <label id="loginIdLabel" for="loginId">CNPJ da loja</label>
+          <div class="input-wrap"><span class="input-symbol">▤</span><input id="loginId" name="loginId" type="text" placeholder="00.000.000/0000-00" autocomplete="username" required></div>
+          <label for="loginPassword">Senha</label>
+          <div class="input-wrap"><span class="input-symbol">⌑</span><input id="loginPassword" name="password" type="password" placeholder="Digite sua senha" autocomplete="current-password" required><button class="password-toggle" type="button" id="togglePassword" aria-label="Mostrar senha">◉</button></div>
+          <button type="button" id="forgotPasswordButton" class="forgot-password-button hidden">Esqueci minha senha</button>
+          <button class="btn btn-primary login-submit" type="submit">Entrar <span>→</span></button>
+          <p id="loginError" class="form-error" role="alert"></p>
+        </form>
+        <div class="login-hint" id="loginHint"><strong>Acesso da loja</strong><span>Informe o CNPJ cadastrado e utilize a senha global fornecida pela empresa.</span></div>
+        <p class="login-foot">Acesso seguro · EncomendaFácil</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="appView" class="app-shell hidden">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand sidebar-brand">
+        <div class="brand-mark"><span></span><span></span><span></span></div>
+        <div><strong>EncomendaFácil</strong><small>Gestão de solicitações</small></div>
+      </div>
+      <div class="sidebar-profile">
+        <div class="avatar" id="profileAvatar">L</div>
+        <div class="profile-info"><strong id="profileName">Comprador</strong><small id="profileRole">Comprador</small></div>
+        <span class="online-indicator" title="Sessão ativa"></span>
+      </div>
+      <div class="nav-caption">MENU PRINCIPAL</div>
+      <nav id="sideNav" class="side-nav"></nav>
+      <div class="sidebar-bottom">
+        <div class="help-box"><div class="help-icon">?</div><div><strong>Precisa de ajuda?</strong><small>Acompanhe suas encomendas por aqui.</small></div></div>
+        <button class="logout-button" id="logoutButton" type="button"><span class="logout-icon">↪</span><span class="logout-label">Sair da plataforma</span></button>
+      </div>
+    </aside>
+
+    <section class="main-column">
+      <header class="topbar">
+        <button id="menuToggleButton" class="menu-toggle-button" type="button" aria-label="Recolher ou expandir menu" aria-expanded="true" title="Recolher ou expandir menu">☰</button>
+        <div class="breadcrumb"><span>EncomendaFácil</span><b>/</b><strong id="breadcrumbCurrent">Visão geral</strong></div>
+        <div class="topbar-right"><span class="today-label" id="todayLabel"></span><div class="top-avatar" id="topAvatar">L</div></div>
+      </header>
+      <main class="page-content" id="pageContent"></main>
+      <footer class="app-footer"><span>EncomendaFácil</span><span>Organização que aproxima loja e compras.</span></footer>
+    </section>
+  </div>
+
+  <dialog id="exportDialog" class="export-dialog" aria-labelledby="exportDialogTitle">
+    <div class="export-dialog-card">
+      <button type="button" class="dialog-close" id="closeExportDialog" aria-label="Fechar">×</button>
+      <span class="eyebrow">EXPORTAÇÃO DE DADOS</span>
+      <h2 id="exportDialogTitle">Como deseja exportar?</h2>
+      <p class="dialog-description">Escolha o formato adequado para utilizar suas encomendas.</p>
+      <div id="exportChoiceView" class="export-choice-grid">
+        <button type="button" class="export-choice" id="exportCompleteChoice">
+          <span class="export-choice-icon">▦</span>
+          <span><strong>Relatório completo</strong><small>Planilha Excel com loja, CNPJ, produto, status e datas.</small></span>
+          <span class="choice-arrow">→</span>
+        </button>
+        <button type="button" class="export-choice" id="exportA7Choice">
+          <span class="export-choice-icon">⇩</span>
+          <span><strong>Exportar para A7</strong><small>Arquivo CSV Macintosh com CNPJ, EAN e QTD.</small></span>
+          <span class="choice-arrow">→</span>
+        </button>
+      </div>
+      <div id="a7StatusView" class="a7-status-view hidden">
+        <div class="a7-status-heading"><strong>Quais status deseja incluir?</strong><small>Somente os produtos com os status marcados serão enviados ao arquivo.</small></div>
+        <label class="status-check-option"><input type="checkbox" name="a7Status" value="pending" checked><span class="status pending">Pendente</span></label>
+        <label class="status-check-option"><input type="checkbox" name="a7Status" value="bought" checked><span class="status bought">Comprado</span></label>
+        <label class="status-check-option"><input type="checkbox" name="a7Status" value="shortage" checked><span class="status shortage">Em falta</span></label>
+        <div class="dialog-actions"><button type="button" class="btn btn-outline" id="backExportChoices">Voltar</button><button type="button" class="btn btn-primary" id="confirmA7Export">Exportar CSV A7</button></div>
+      </div>
+      <p class="dialog-footnote">A exportação considera os filtros de período aplicados no relatório.</p>
+    </div>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
