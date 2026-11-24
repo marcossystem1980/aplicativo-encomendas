@@ -145,6 +145,8 @@ button { cursor: pointer; }
 .field input, .field select, .filter-control { width: 100%; height: 40px; padding: 0 11px; outline: none; border: 1px solid #e1e9e3; border-radius: 8px; background: #fcfdfc; color: #34463b; font-size: 11px; }
 .field input:focus, .field select:focus, .filter-control:focus { border-color: #8eb69c; box-shadow: 0 0 0 3px rgba(142,182,156,.12); }
 .field input::placeholder { color: #b2bdb5; }
+.field input[aria-invalid="true"], .field input[aria-invalid="true"]:focus { border-color: var(--red); box-shadow: 0 0 0 3px rgba(179, 74, 74, .10); }
+.field .form-error { display: block; min-height: 0; margin: 6px 0 0; color: var(--red); font-size: 10px; line-height: 1.4; }
 .form-actions { display: flex; }
 .form-actions .btn { height: 40px; white-space: nowrap; }
 .table-panel { margin-top: 21px; overflow: hidden; }
@@ -594,3 +596,12 @@ td strong { color: #304238; font-weight: 700; }
 /* Campo Produto: descrição colada e padronizada em letras maiúsculas. */
 #orderProduct { text-transform: uppercase; }
 #orderProduct::placeholder { text-transform: none; }
+
+/* Ações dos filtros de período na Visão geral unificada. */
+.overview-period-panel { margin-bottom: 19px; }
+.overview-period-actions { gap: 8px; }
+.overview-period-actions .btn { flex: 1 1 0; width: auto; }
+@media (max-width: 420px) {
+  .overview-period-actions { flex-direction: column; }
+  .overview-period-actions .btn { width: 100%; }
+}

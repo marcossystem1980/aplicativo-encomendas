@@ -106,7 +106,7 @@
         </button>
         <button type="button" class="export-choice" id="exportA7Choice">
           <span class="export-choice-icon">⇩</span>
-          <span><strong>Exportar para A7</strong><small>Arquivo CSV Macintosh com CNPJ, EAN e QTD.</small></span>
+          <span><strong>Exportar para A7</strong><small>Planilha Excel (.xlsx) com três colunas: CNPJ, EAN e QTD.</small></span>
           <span class="choice-arrow">→</span>
         </button>
       </div>
@@ -115,14 +115,22 @@
         <label class="status-check-option"><input type="checkbox" name="a7Status" value="pending" checked><span class="status pending">Pendente</span></label>
         <label class="status-check-option"><input type="checkbox" name="a7Status" value="bought" checked><span class="status bought">Comprado</span></label>
         <label class="status-check-option"><input type="checkbox" name="a7Status" value="shortage" checked><span class="status shortage">Em falta</span></label>
-        <div class="dialog-actions"><button type="button" class="btn btn-outline" id="backExportChoices">Voltar</button><button type="button" class="btn btn-primary" id="confirmA7Export">Exportar CSV A7</button></div>
+        <div class="dialog-actions"><button type="button" class="btn btn-outline" id="backExportChoices">Voltar</button><button type="button" class="btn btn-primary" id="confirmA7Export">Exportar Excel A7</button></div>
       </div>
-      <p class="dialog-footnote">A exportação considera os filtros de período aplicados no relatório.</p>
+      <p class="dialog-footnote">A exportação considera o período, a pesquisa e o status aplicados na Visão geral.</p>
     </div>
   </dialog>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
+  <!-- Scripts clássicos em ordem: compartilham o estado global da versão original. -->
+  <script src="js/core.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/orders.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/reports.js"></script>
+  <script src="js/exports.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

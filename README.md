@@ -6,11 +6,34 @@ Aplicação estática em HTML, CSS e JavaScript, conectada ao Supabase Auth e Po
 
 - `index.html`: login e aplicação.
 - `styles.css`: identidade visual.
-- `app.js`: telas, regras e integração Supabase.
+- `app.js`: inicialização e composição das telas.
+- `js/core.js`: configuração do Supabase, estado compartilhado e utilitários.
+- `js/auth.js`: login, recuperação de senha e restauração de sessão.
+- `js/store.js`: telas e operações da área da loja.
+- `js/orders.js`: listagem, filtros, seleção e operações de encomendas.
+- `js/reports.js`: filtro de período integrado à Visão geral.
+- `js/exports.js`: exportação do relatório completo e planilha Excel (.xlsx) para A7.
+- `js/settings.js`: configurações, cadastro de lojas e importação de planilhas.
 - `supabase-config.js`: Project URL e chave pública (publishable/anon).
+- `backup/app.original.js`: cópia de segurança do `app.js` monolítico original.
 - `redefinir-senha.html` e `redefinir-senha.js`: fluxo de recuperação de senha do Comprador.
 - `database/schema_global_lojas.sql`: schema inicial usado no Supabase.
 - `database/vincular_comprador.sql`: associa um usuário Auth ao perfil `comprador`.
+
+## Organização do JavaScript
+
+O JavaScript foi separado por responsabilidade, preservando as funções e regras existentes. Nesta primeira etapa, os arquivos `js/*.js` são carregados como scripts clássicos, em ordem, para manter compatibilidade com o escopo compartilhado que a versão original utilizava. Por isso, mantenha a sequência de scripts no final de `index.html` e não adicione `async` aos arquivos locais.
+
+Esta é uma etapa intermediária de modularização com foco em baixo risco. A conversão para ES Modules (`import`/`export`) pode ser feita depois dos testes funcionais no navegador, com a dependência entre funções tratada de forma explícita.
+
+A pasta `backup` serve apenas para recuperação e não é carregada pelo aplicativo.
+
+## Histórico de melhorias
+
+- V2: `ALTERACOES-V2.md` — exportação na Visão geral e validação para impedir que Produto seja igual ao EAN/código de barras.
+- V3: `ALTERACOES-V3.md` — unificação de Visão geral e Relatórios, além da especificação inicial de exportação A7 (substituída por Excel na V4).
+
+Este pacote é destinado à homologação antes de qualquer publicação.
 
 ## Configuração inicial
 
@@ -40,3 +63,11 @@ Abra a pasta no VS Code e execute `index.html` por um servidor local, como Live 
 ## Publicação no Vercel
 
 Este é um projeto estático; não requer React, Vite, npm ou etapa de build. Envie o conteúdo desta pasta para o GitHub e importe o repositório no Vercel com Framework Preset `Other`. O diretório raiz publicado precisa conter `index.html`. Depois do primeiro deploy, adicione o endereço Vercel de `redefinir-senha.html` às Redirect URLs do Supabase.
+
+
+## Visão geral unificada
+
+A tela Visão geral do Comprador concentra os indicadores, filtros por período, pesquisa, status, tabela de encomendas e exportações. A exportação A7 gera uma planilha Excel (.xlsx) com três colunas independentes: CNPJ, EAN e QTD. CNPJ e EAN são armazenados como texto para preservar zeros à esquerda; QTD é numérico.
+
+
+- V4: `ALTERACOES-V4.md` — substituição do CSV A7 por uma planilha Excel `.xlsx` com três colunas independentes.

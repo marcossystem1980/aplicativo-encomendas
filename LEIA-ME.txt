@@ -4,10 +4,21 @@ HTML, CSS e JavaScript puro + Supabase Auth + PostgreSQL
 ESTRUTURA
 - index.html: tela de login e aplicação.
 - styles.css: identidade visual.
-- app.js: regras das telas e integração com o banco.
+- app.js: inicialização e composição das telas.
+- js/core.js: configuração, estado compartilhado e utilitários.
+- js/auth.js: autenticação e sessão.
+- js/store.js: área da loja e cadastro de encomendas.
+- js/orders.js: listagem, filtros e operações de encomendas.
+- js/reports.js: relatórios.
+- js/exports.js: exportações Excel e planilha Excel A7 (.xlsx).
+- js/settings.js: configurações, lojas e importação de planilhas.
+- backup/app.original.js: cópia de segurança do app.js original.
 - supabase-config.js: URL e chave pública do seu projeto Supabase.
 - redefinir-senha.html / redefinir-senha.js: recuperação de senha do Comprador.
 - vincular-comprador.sql: associação do usuário Auth ao perfil Comprador.
+
+OBSERVAÇÃO SOBRE A ORGANIZAÇÃO DO CÓDIGO
+O JavaScript foi separado por responsabilidade. Os arquivos locais são carregados como scripts clássicos e compartilham o estado global da versão anterior para reduzir o risco de regressões nesta primeira etapa. Mantenha a ordem das tags script no final de index.html e não adicione async. A conversão para ES Modules será considerada depois dos testes funcionais no navegador. A pasta backup não é carregada pelo aplicativo.
 
 1. CONFIGURAR A CONEXÃO COM O SUPABASE
 1) A URL e a Publishable Key do projeto já estão preenchidas em supabase-config.js.
